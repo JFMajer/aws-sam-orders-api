@@ -51,4 +51,15 @@ Resources:
                 Name: id
                 Type: Number
 
-
+Outputs:
+    CreateOrdersAPI:
+        Description: "API Endpoint"
+        Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/orders"
+    TestGetRequest:
+        Value: !Sub "curl https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/orders/1"
+    CreateOrderLambdaARN:
+        Description: "Add order lambda ARN"
+        Value: !GetAtt CreateOrderFunction.Arn
+    CreateOrderLambdaIamRoleArn:
+        Description: "Add order lambda IAM Role ARN"
+        Value: !GetAtt CreateOrderFunctionRole.Arn
