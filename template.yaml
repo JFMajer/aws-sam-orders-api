@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    orders-api
+
+    SAM Template for simple api.
+
+
+Globals:
+    Function:
+        Runtime: python3.9
+
+Resources:
+    CreateOrderFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: orders-api/
+            Handler: create.lambda_handler
+            Events:
+                CreateOrders:
+                    Type: Api
+                    Properties:
+                        Path: /orders
+                        Method: POST
+
+    ReadOrderFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: orders-api/
+            Handler: read.lambda_handler
+            Events:
+                ReadOrders:
+                    Type: Api
+                    Properties:
+                        Path: /orders/{id}
+                        Method: GET
+
+
+
