@@ -9,6 +9,9 @@ Description: >
 Globals:
     Function:
         Runtime: python3.9
+        Environment:
+            Variables:
+                ORDERS_TABLE: !Ref OrdersTable
 
 Resources:
     CreateOrderFunction:
@@ -22,6 +25,9 @@ Resources:
                     Properties:
                         Path: /orders
                         Method: POST
+            Policies:
+                - DynamoDBCrudPolicy:
+                      TableName: !Ref OrdersTable
 
     ReadOrderFunction:
         Type: AWS::Serverless::Function
@@ -34,6 +40,15 @@ Resources:
                     Properties:
                         Path: /orders/{id}
                         Method: GET
+            Policies:
+                - DynamoDBReadPolicy:
+                      TableName: !Ref OrdersTable
 
+    OrdersTable:
+        Type: AWS::Serverless::SimpleTable
+        Properties:
+            PrimaryKey:
+                Name: id
+                Type: Number
 
 
